@@ -1,32 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import React, { useState, useEffect } from 'react'
+import StatusBar from './components/StatusBar'
 
-function App() {
-  const [count, setCount] = useState(0)
+const countryData = {
+  name: "CountryName",
+  freedom: {
+    personal: 50,
+    economy: 50,
+    political: 50
+  },
+}
 
+const App = () => {
+
+  const [country, setCountry] = useState(null)
+
+  useEffect(() => {
+    setCountry(countryData)
+
+    // Fetch country data, with username and password
+
+  }, [])
+  
+  if (!country) return null
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='App'>
+      <h1>{countryData.name}</h1>
+      <div className="status">
+        {
+          Object.entries(country.freedom).map(value => <StatusBar stat={value}/>)
+        }
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
   )
 }
